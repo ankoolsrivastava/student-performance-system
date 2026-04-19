@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Students - Teacher Dashboard</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.1/dist/gsap.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"
+    />
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+      :root {
+        --first-color: hsl(263, 64%, 48%);
+        --first-color-alt: hsl(263, 64%, 44%);
+        --bg-color: #f4f7fe;
+        --card-bg: #ffffff;
+        --text-main: #2b3674;
+        --text-muted: #a3aed1;
+        --border-color: #e2e8f0;
+        --input-bg: #f8fafc;
+        --body-font: "Inter", sans-serif;
+      }
+
+      [data-theme="dark"] {
+        --bg-color: #0b0f19;
+        --card-bg: #1a1f2e;
+        --text-main: #f8fafc;
+        --text-muted: #94a3b8;
+        --border-color: #2a3142;
+        --input-bg: #0f172a;
+      }
+
+      body {
+        margin: 0;
+        font-family: var(--body-font);
+        background: var(--bg-color);
+        color: var(--text-main);
+        overflow-x: hidden;
+        transition:
+          background-color 0.3s,
+          color 0.3s;
+      }
+      .layout {
+        display: flex;
+        min-height: 100vh;
+      }
+
+      /* SIDEBAR */
+      .sidebar {
+        width: 260px;
+        flex-shrink: 0;
+        background: var(--first-color);
+        color: white;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.05);
+        z-index: 20;
+      }
+      .sidebar h2 {
+        text-align: center;
+        padding: 30px 20px;
+        font-size: 1.6rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        margin-bottom: 20px;
+      }
+      .sidebar a {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 20px;
+        margin: 4px 16px;
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        font-weight: 500;
+        border-radius: 10px;
+        transition: 0.3s;
+      }
+      .sidebar a i {
+        font-size: 1.2rem;
+      }
+      .sidebar a:hover,
+      .sidebar a.active {
+        background: rgba(255, 255, 255, 0.15);
+        color: white;
+        transform: translateX(4px);
+      }
+
+      /* MAIN CONTENT */
+      .main {
+        flex: 1;
+        padding: 30px 40px;
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        height: 100vh;
+        overflow-y: auto;
+        box-sizing: border-box;
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        position: relative;
+        z-index: 1000;
+      }
+      .topbar h1 {
+        font-size: 2rem;
+        color: var(--text-main);
+        margin: 0;
+        font-weight: 700;
+      }
+
+      .profile-wrapper {
+        position: relative;
+      }
+      .profile {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: var(--card-bg);
+        padding: 6px 16px 6px 6px;
+        border-radius: 30px;
+        font-weight: 600;
+        cursor: pointer;
+        border: 1px solid var(--border-color);
+      }
+      .profile img {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .dropdown {
+        position: absolute;
+        top: 120%;
+        right: 0;
+        background: var(--card-bg);
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        width: 200px;
+        padding: 10px 0;
+        display: flex;
+        flex-direction: column;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: 0.3s ease;
+        z-index: 1001;
+        border: 1px solid var(--border-color);
+      }
+      .dropdown.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+      .dropdown a,
+      .dropdown button {
+        padding: 12px 20px;
+        color: var(--text-main);
+        background: none;
+        border: none;
+        text-align: left;
+        font-weight: 500;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: 0.2s;
+        font-size: 1rem;
+        font-family: var(--body-font);
+      }
+      .dropdown a:hover,
+      .dropdown button:hover {
+        background: var(--bg-color);
+        color: var(--first-color);
+      }
+
+      /* CONTROLS */
+      .controls-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 15px;
+        background: var(--card-bg);
+        padding: 20px;
+        border-radius: 16px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.04);
+        border: 1px solid var(--border-color);
+        position: relative;
+        z-index: 10;
+        opacity: 0; /* GSAP */
+      }
+
+      .search-box {
+        position: relative;
+        width: 100%;
+        max-width: 350px;
+      }
+      .search-box i {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-muted);
+        font-size: 1.2rem;
+      }
+      .search-box input {
+        width: 100%;
+        padding: 12px 15px 12px 45px;
+        border: 1px solid var(--border-color);
+        border-radius: 30px;
+        background: var(--input-bg);
+        color: var(--text-main);
+        font-family: var(--body-font);
+        font-size: 0.95rem;
+        outline: none;
+        transition: 0.3s;
+        box-sizing: border-box;
+      }
+      .search-box input:focus {
+        border-color: var(--first-color);
+        box-shadow: 0 0 0 3px hsla(263, 64%, 48%, 0.1);
+      }
+
+      .btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        font-family: var(--body-font);
+        font-weight: 600;
+        font-size: 0.95rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.2s ease;
+      }
+      .btn-primary {
+        background: var(--first-color);
+        color: white;
+      }
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        filter: brightness(1.1);
+      }
+
+      /* TABLE */
+      .table-container {
+        background: var(--card-bg);
+        border-radius: 16px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.04);
+        padding: 20px;
+        overflow-x: auto;
+        border: 1px solid var(--border-color);
+        opacity: 0; /* GSAP */
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 700px;
+      }
+      th,
+      td {
+        padding: 16px 15px;
+        text-align: left;
+        border-bottom: 1px solid var(--border-color);
+      }
+      th {
+        color: var(--text-muted);
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        letter-spacing: 0.5px;
+      }
+      td {
+        font-weight: 500;
+        color: var(--text-main);
+      }
+      tr:last-child td {
+        border-bottom: none;
+      }
+      tbody tr {
+        transition: background-color 0.2s;
+      }
+      tbody tr:hover {
+        background-color: var(--input-bg);
+      }
+
+      /* Action Buttons in Table */
+      .action-btns {
+        display: flex;
+        gap: 8px;
+        justify-content: flex-end;
+      }
+      .btn-small {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+        border-radius: 6px;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        transition: 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .btn-view {
+        background: rgba(59, 130, 246, 0.1);
+        color: #3b82f6;
+      }
+      .btn-view:hover {
+        background: #3b82f6;
+        color: white;
+      }
+      .btn-edit {
+        background: rgba(16, 185, 129, 0.1);
+        color: #10b981;
+      }
+      .btn-edit:hover {
+        background: #10b981;
+        color: white;
+      }
+      .btn-delete {
+        background: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+      }
+      .btn-delete:hover {
+        background: #ef4444;
+        color: white;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="layout">
+      <div class="sidebar">
+        <h2>Teacher</h2>
+        <a href="dashboard.html"><i class="ri-dashboard-line"></i> Dashboard</a>
+        <a href="students.html" class="active"
+          ><i class="ri-group-line"></i> Students</a
+        >
+        <a href="marks.html"><i class="ri-file-edit-line"></i> Marks Entry</a>
+        <a href="attendance.html"
+          ><i class="ri-calendar-check-line"></i> Attendance</a
+        >
+        <a href="analysis.html"
+          ><i class="ri-bar-chart-box-line"></i> Performance</a
+        >
+      </div>
+
+      <div class="main">
+        <header class="topbar">
+          <h1>Students Management</h1>
+          <div class="profile-wrapper">
+            <div class="profile" id="profileBtn">
+              <span id="teacherName"></span>
+              <img id="profileImg" src="" alt="Profile" />
+              <i
+                class="ri-arrow-down-s-line"
+                style="color: var(--text-muted)"
+              ></i>
+            </div>
+            <div class="dropdown" id="profileDropdown">
+              <a href="profile.html" style="text-decoration: none"
+                ><i class="ri-user-line"></i> My Profile</a
+              >
+              <button id="themeToggle">
+                <i class="ri-moon-line" id="themeIcon"></i> Toggle Theme
+              </button>
+              <button onclick="logout()" class="logout-btn">
+                <i class="ri-logout-box-r-line"></i> Logout
+              </button>
+            </div>
+          </div>
+        </header>
+
+        <div class="controls-container">
+          <div class="search-box">
+            <i class="ri-search-line"></i>
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Search by name, roll no, or dept..."
+            />
+          </div>
+          <button
+            class="btn btn-primary"
+            onclick="window.location.href = 'add-student.html'"
+          >
+            <i class="ri-user-add-line"></i> Add New Student
+          </button>
+        </div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 50px">#</th>
+                <th>Roll No</th>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Year</th>
+                <th style="text-align: right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="studentTable">
+              <tr>
+                <td colspan="6" style="text-align: center; padding: 40px">
+                  Fetching students...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      /* --- THEME & DROPDOWN --- */
+      const applyTheme = (t) => {
+        document.body.setAttribute("data-theme", t);
+        const icon = document.getElementById("themeIcon");
+        if (icon)
+          icon.className = t === "dark" ? "ri-sun-line" : "ri-moon-line";
+      };
+
+      let currentTheme = localStorage.getItem("dashboard_theme") || "light";
+      applyTheme(currentTheme);
+
+      if (document.getElementById("themeToggle")) {
+        document.getElementById("themeToggle").addEventListener("click", () => {
+          currentTheme = currentTheme === "light" ? "dark" : "light";
+          localStorage.setItem("dashboard_theme", currentTheme);
+          applyTheme(currentTheme);
+        });
+      }
+
+      document.getElementById("profileBtn").addEventListener("click", (e) => {
+        e.stopPropagation();
+        document.getElementById("profileDropdown").classList.toggle("show");
+      });
+      window.addEventListener("click", (e) => {
+        if (!document.getElementById("profileDropdown").contains(e.target)) {
+          document.getElementById("profileDropdown").classList.remove("show");
+        }
+      });
+
+      /* --- TEACHER SETUP --- */
+      const teacher = JSON.parse(localStorage.getItem("teacher") || "{}");
+      if (!teacher.name) window.location.href = "login.html";
+      document.getElementById("teacherName").innerText = teacher.name;
+      document.getElementById("profileImg").src =
+        `https://ui-avatars.com/api/?name=${encodeURIComponent(teacher.name)}&background=6a7de3&color=fff&bold=true`;
+
+      /* --- GSAP ANIMATION --- */
+      window.addEventListener("DOMContentLoaded", () => {
+        const tl = gsap.timeline();
+        tl.to(".controls-container", {
+          y: -10,
+          opacity: 1,
+          duration: 0.5,
+          ease: "power2.out",
+        }).to(
+          ".table-container",
+          { y: -10, opacity: 1, duration: 0.5, ease: "power2.out" },
+          "-=0.3",
+        );
+      });
+
+      /* --- BACKEND LOGIC --- */
+      window.allStudents = [];
+
+      async function loadStudents() {
+        try {
+          const res = await fetch("http://localhost:5000/api/students", {
+            cache: "no-store",
+          });
+          if (!res.ok) throw new Error("Failed to fetch data");
+
+          window.allStudents = await res.json();
+          displayStudents(window.allStudents);
+        } catch (e) {
+          console.error(e);
+          document.getElementById("studentTable").innerHTML =
+            `<tr><td colspan="6" style="text-align:center;color:#ef4444;">Failed to load students. Ensure server is running.</td></tr>`;
+        }
+      }
+
+      function displayStudents(studentsList) {
+        if (studentsList.length === 0) {
+          document.getElementById("studentTable").innerHTML =
+            `<tr><td colspan="6" style="text-align:center; padding:30px;">No students found.</td></tr>`;
+          return;
+        }
+
+        const html = studentsList
+          .map(
+            (s, index) => `
+          <tr class="student-row">
+            <td style="color: var(--text-muted); font-weight: 700;">${index + 1}</td>
+            <td style="color: var(--first-color); font-weight: 700;">${s.roll_number}</td>
+            <td style="font-weight: 700;">${s.name}</td>
+            <td>${s.department || "-"}</td>
+            <td>${s.year ? "Year " + s.year : "-"}</td>
+            <td>
+              <div class="action-btns">
+                <button class="btn-small btn-view" onclick="window.location.href='student-profile.html?id=${s.student_id}'" title="View Profile"><i class="ri-eye-line"></i></button>
+                <button class="btn-small btn-edit" onclick="window.location.href='edit-student.html?id=${s.student_id}'" title="Edit Profile"><i class="ri-edit-line"></i></button>
+                <button class="btn-small btn-delete" onclick="deleteStudent(${s.student_id})" title="Delete Record"><i class="ri-delete-bin-line"></i></button>
+              </div>
+            </td>
+          </tr>
+        `,
+          )
+          .join("");
+
+        document.getElementById("studentTable").innerHTML = html;
+      }
+
+      /* Search Logic */
+      document
+        .getElementById("searchInput")
+        .addEventListener("input", function (e) {
+          const keyword = e.target.value.toLowerCase();
+
+          // Filter the actual array so the index numbers (#) recount correctly!
+          const filtered = window.allStudents.filter(
+            (s) =>
+              s.name.toLowerCase().includes(keyword) ||
+              s.roll_number.toLowerCase().includes(keyword) ||
+              (s.department && s.department.toLowerCase().includes(keyword)),
+          );
+
+          displayStudents(filtered);
+        });
+
+      /* Delete Logic */
+      async function deleteStudent(id) {
+        if (
+          !confirm(
+            "Delete this student? All their marks and attendance will also be permanently deleted.",
+          )
+        )
+          return;
+
+        try {
+          const res = await fetch(`http://localhost:5000/api/students/${id}`, {
+            method: "DELETE",
+          });
+          if (!res.ok) throw new Error("Delete failed");
+
+          // Remove from local array and re-render
+          window.allStudents = window.allStudents.filter(
+            (s) => s.student_id !== id,
+          );
+
+          // Trigger the search input event to re-render the list with the current search filter
+          const event = new Event("input");
+          document.getElementById("searchInput").dispatchEvent(event);
+        } catch (err) {
+          console.error(err);
+          alert("Error deleting student. Check server connection.");
+        }
+      }
+
+      function logout() {
+        localStorage.removeItem("teacher");
+        window.location.href = "login.html";
+      }
+
+      loadStudents();
+    </script>
+  </body>
+</html>
