@@ -604,7 +604,7 @@
       /* SESSION CHECK */
       const teacher = JSON.parse(localStorage.getItem("teacher") || "{}");
       if (!teacher.name) {
-        window.location.href = "login.html";
+        window.location.href = "index.html";
       } else {
         document.getElementById("welcome").innerText =
           "Welcome, " + teacher.name;
@@ -773,7 +773,7 @@
 
       function logout() {
         localStorage.removeItem("teacher");
-        window.location.href = "login.html";
+        window.location.href = "index.html";
       }
 
       loadDashboardData();

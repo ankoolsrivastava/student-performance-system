@@ -458,7 +458,7 @@
 
       /* --- TEACHER SETUP --- */
       const teacher = JSON.parse(localStorage.getItem("teacher") || "{}");
-      if (!teacher.name) window.location.href = "login.html";
+      if (!teacher.name) window.location.href = "index.html";
       document.getElementById("teacherName").innerText = teacher.name;
       document.getElementById("profileImg").src =
         `https://ui-avatars.com/api/?name=${encodeURIComponent(teacher.name)}&background=6a7de3&color=fff&bold=true`;
@@ -582,7 +582,7 @@
 
       function logout() {
         localStorage.removeItem("teacher");
-        window.location.href = "login.html";
+        window.location.href = "index.html";
       }
 
       loadStudents();

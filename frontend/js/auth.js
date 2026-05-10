@@ -2,7 +2,7 @@
 const teacher = JSON.parse(localStorage.getItem("teacher"));
 
 if (!teacher) {
-  window.location.href = "login.html";
+  window.location.href = "index.html";
 }
 
 // Show teacher name if element exists
@@ -14,5 +14,5 @@ if (teacher && teacherNameEl) {
 // Logout function
 function logout() {
   localStorage.removeItem("teacher");
-  window.location.href = "login.html";
+  window.location.href = "index.html";
 }
