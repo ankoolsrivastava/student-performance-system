@@ -340,7 +340,7 @@
         if (!studentId) return;
         try {
           const res = await fetch(
-            `http://https://student-performance-api-8mcf.onrender.com/api/students/${studentId}`,
+            ` https://student-performance-api-8mcf.onrender.com/api/students/${studentId}`,
           );
           if (!res.ok) throw new Error("Failed to fetch");
 
@@ -385,7 +385,7 @@
         if (!studentId) return;
         try {
           const res = await fetch(
-            `http://https://student-performance-api-8mcf.onrender.com/api/analysis/report/${studentId}`,
+            ` https://student-performance-api-8mcf.onrender.com/api/analysis/report/${studentId}`,
           );
           const data = await res.json();
 

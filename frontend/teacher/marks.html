@@ -531,10 +531,10 @@
         try {
           const [students, subjects] = await Promise.all([
             fetch(
-              "http://https://student-performance-api-8mcf.onrender.com/api/students",
+              " https://student-performance-api-8mcf.onrender.com/api/students",
             ).then((r) => r.json()),
             fetch(
-              "http://https://student-performance-api-8mcf.onrender.com/api/analysis/subjects",
+              " https://student-performance-api-8mcf.onrender.com/api/analysis/subjects",
             ).then((r) => r.json()),
           ]);
           const studentHTML = students
@@ -585,7 +585,7 @@
 
         try {
           const res = await fetch(
-            "http://https://student-performance-api-8mcf.onrender.com/api/marks/upsert",
+            " https://student-performance-api-8mcf.onrender.com/api/marks/upsert",
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
@@ -628,7 +628,7 @@
 
         try {
           const res = await fetch(
-            "http://https://student-performance-api-8mcf.onrender.com/api/assignments/upsert",
+            " https://student-performance-api-8mcf.onrender.com/api/assignments/upsert",
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
@@ -651,7 +651,7 @@
       async function initReportFilters() {
         try {
           const res = await fetch(
-            "http://https://student-performance-api-8mcf.onrender.com/api/analysis/subjects",
+            " https://student-performance-api-8mcf.onrender.com/api/analysis/subjects",
           );
           const subjects = await res.json();
           document.getElementById("filterSubject").innerHTML = subjects
@@ -676,7 +676,7 @@
 
         try {
           const res = await fetch(
-            `http://https://student-performance-api-8mcf.onrender.com/api/analysis/filtered-standings?exam_type=${examType}&subject_id=${subjectId}`,
+            ` https://student-performance-api-8mcf.onrender.com/api/analysis/filtered-standings?exam_type=${examType}&subject_id=${subjectId}`,
           );
           if (!res.ok) throw new Error("API Error");
           fullData = await res.json();

@@ -571,7 +571,7 @@
       async function loadSubjects() {
         try {
           const res = await fetch(
-            "http://https://student-performance-api-8mcf.onrender.com/api/analysis/subjects",
+            " https://student-performance-api-8mcf.onrender.com/api/analysis/subjects",
           );
           const data = await res.json();
           const markSelect = document.getElementById("subjectSelectMark");
@@ -605,7 +605,7 @@
 
         try {
           const res = await fetch(
-            "http://https://student-performance-api-8mcf.onrender.com/api/students",
+            " https://student-performance-api-8mcf.onrender.com/api/students",
           );
           let students = await res.json();
 
@@ -684,7 +684,7 @@
 
         try {
           const res = await fetch(
-            "http://https://student-performance-api-8mcf.onrender.com/api/attendance/mark",
+            " https://student-performance-api-8mcf.onrender.com/api/attendance/mark",
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
@@ -712,7 +712,7 @@
         const subId = document.getElementById("subjectSelectReport").value;
         const timeframe = document.getElementById("timeFilter").value;
 
-        let url = `http://https://student-performance-api-8mcf.onrender.com/api/attendance/report?filterType=${timeframe}`;
+        let url = ` https://student-performance-api-8mcf.onrender.com/api/attendance/report?filterType=${timeframe}`;
         if (subId) url += `&subject_id=${subId}`;
 
         try {
@@ -751,7 +751,7 @@
       async function toggleDefaulter(id, status) {
         try {
           const res = await fetch(
-            "http://https://student-performance-api-8mcf.onrender.com/api/attendance/flag",
+            " https://student-performance-api-8mcf.onrender.com/api/attendance/flag",
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },

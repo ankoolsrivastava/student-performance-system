@@ -405,7 +405,7 @@
 
         try {
           const res = await fetch(
-            "http://https://student-performance-api-8mcf.onrender.com/api/students/next-roll",
+            "https://student-performance-api-8mcf.onrender.com/api/students/next-roll",
           );
 
           if (!res.ok) {
@@ -421,9 +421,7 @@
           console.error("Auto-generate failed:", err);
           rollInput.value = "";
           if (err.message === "Failed to fetch") {
-            alert(
-              "Cannot reach the backend server. Is it running on port?",
-            );
+            alert("Cannot reach the backend server. Is it running on port?");
           }
         } finally {
           rollInput.removeAttribute("readonly");
@@ -501,7 +499,7 @@
 
           try {
             const res = await fetch(
-              "http://https://student-performance-api-8mcf.onrender.com/api/students",
+              " https://student-performance-api-8mcf.onrender.com/api/students",
               {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },

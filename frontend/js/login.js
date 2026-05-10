@@ -8,7 +8,7 @@ form.addEventListener("submit", async (e) => {
 
   try {
     const response = await fetch(
-      "http://https://student-performance-api-8mcf.onrender.com",
+      "https://student-performance-api-8mcf.onrender.com",
       {
         method: "POST",
 

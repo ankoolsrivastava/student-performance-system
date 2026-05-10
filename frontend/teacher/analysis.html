@@ -322,13 +322,13 @@
         try {
           const [students, averages, risk] = await Promise.all([
             fetch(
-              "http://https://student-performance-api-8mcf.onrender.com/api/students",
+              " https://student-performance-api-8mcf.onrender.com/api/students",
             ).then((r) => r.json()),
             fetch(
-              "http://https://student-performance-api-8mcf.onrender.com/api/analysis/averages",
+              " https://student-performance-api-8mcf.onrender.com/api/analysis/averages",
             ).then((r) => r.json()),
             fetch(
-              "http://https://student-performance-api-8mcf.onrender.com/api/analysis/at-risk",
+              " https://student-performance-api-8mcf.onrender.com/api/analysis/at-risk",
             ).then((r) => r.json()),
           ]);
 
@@ -368,7 +368,7 @@
 
           // Pie Chart: Failure concentration by subject
           const weakRes = await fetch(
-            "http://https://student-performance-api-8mcf.onrender.com/api/analysis/weak-students",
+            " https://student-performance-api-8mcf.onrender.com/api/analysis/weak-students",
           );
           const weakData = await weakRes.json();
 
