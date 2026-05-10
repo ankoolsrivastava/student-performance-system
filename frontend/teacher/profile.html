@@ -452,7 +452,7 @@
       async function loadTeacherProfile() {
         try {
           const res = await fetch(
-            `http://localhost:5000/api/teachers/${teacherId}`,
+            `http://https://student-performance-api-8mcf.onrender.com/api/teachers/${teacherId}`,
           );
 
           if (!res.ok) {
@@ -465,7 +465,7 @@
           /* PROFILE IMAGE */
 
           if (data.profile_image) {
-            profileImg.src = `http://localhost:5000/uploads/teachers/${data.profile_image}`;
+            profileImg.src = `http://https://student-performance-api-8mcf.onrender.com/uploads/teachers/${data.profile_image}`;
           } else {
             profileImg.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(data.name)}`;
           }
@@ -506,7 +506,7 @@
       async function loadTeacherSubjects() {
         try {
           const res = await fetch(
-            `http://localhost:5000/api/teachers/${teacherId}/subjects`,
+            `http://https://student-performance-api-8mcf.onrender.com/api/teachers/${teacherId}/subjects`,
           );
 
           if (!res.ok) {

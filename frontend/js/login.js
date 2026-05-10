@@ -1,49 +1,38 @@
-
-
 const form = document.getElementById("loginForm");
 
 form.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-e.preventDefault();
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
-const email = document.getElementById("email").value;
-const password = document.getElementById("password").value;
+  try {
+    const response = await fetch(
+      "http://https://student-performance-api-8mcf.onrender.com",
+      {
+        method: "POST",
 
-try {
+        headers: {
+          "Content-Type": "application/json",
+        },
 
-const response = await fetch("http://localhost:5000/api/teachers/login", {
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      },
+    );
 
-method:"POST",
+    const data = await response.json();
 
-headers:{
-"Content-Type":"application/json"
-},
+    if (response.ok) {
+      localStorage.setItem("teacher", JSON.stringify(data));
 
-body:JSON.stringify({
-email,
-password
-})
-
-});
-
-const data = await response.json();
-
-if(response.ok){
-
-localStorage.setItem("teacher",JSON.stringify(data));
-
-window.location.href="dashboard.html";
-
-}else{
-
-document.getElementById("error").innerText=data.message;
-
-}
-
-}catch(err){
-
-document.getElementById("error").innerText="Server error";
-
-}
-
+      window.location.href = "dashboard.html";
+    } else {
+      document.getElementById("error").innerText = data.message;
+    }
+  } catch (err) {
+    document.getElementById("error").innerText = "Server error";
+  }
 });

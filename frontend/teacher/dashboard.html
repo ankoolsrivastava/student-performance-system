@@ -625,23 +625,23 @@
             passRatio,
             trend,
           ] = await Promise.all([
-            fetch("http://localhost:5000/api/students").then((r) => r.json()),
-            fetch("http://localhost:5000/api/analysis/subjects").then((r) =>
+            fetch("https://student-performance-api-8mcf.onrender.com/api/students").then((r) => r.json()),
+            fetch("https://student-performance-api-8mcf.onrender.com/api/analysis/subjects").then((r) =>
               r.json(),
             ),
-            fetch("http://localhost:5000/api/analysis/weak-students").then(
+            fetch("https://student-performance-api-8mcf.onrender.com/api/analysis/weak-students").then(
               (r) => r.json(),
             ),
-            fetch("http://localhost:5000/api/analysis/defaulters").then((r) =>
+            fetch("https://student-performance-api-8mcf.onrender.com/api/analysis/defaulters").then((r) =>
               r.json(),
             ),
-            fetch("http://localhost:5000/api/analysis/averages").then((r) =>
+            fetch("https://student-performance-api-8mcf.onrender.com/api/analysis/averages").then((r) =>
               r.json(),
             ),
-            fetch("http://localhost:5000/api/analysis/pass-ratio").then((r) =>
+            fetch("https://student-performance-api-8mcf.onrender.com/api/analysis/pass-ratio").then((r) =>
               r.json(),
             ),
-            fetch("http://localhost:5000/api/analysis/trend").then((r) =>
+            fetch("https://student-performance-api-8mcf.onrender.com/api/analysis/trend").then((r) =>
               r.json(),
             ), // NEW TREND FETCH
           ]);
@@ -679,7 +679,7 @@
       async function loadTopStudents() {
         const type = document.getElementById("topExamType").value;
         const res = await fetch(
-          `http://localhost:5000/api/analysis/top-students?exam_type=${type}`,
+          `https://student-performance-api-8mcf.onrender.com/api/analysis/top-students?exam_type=${type}`,
         );
         const data = await res.json();
 

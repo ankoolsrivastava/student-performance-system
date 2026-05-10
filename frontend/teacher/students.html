@@ -483,9 +483,12 @@
 
       async function loadStudents() {
         try {
-          const res = await fetch("http://localhost:5000/api/students", {
-            cache: "no-store",
-          });
+          const res = await fetch(
+            "http://https://student-performance-api-8mcf.onrender.com/api/students",
+            {
+              cache: "no-store",
+            },
+          );
           if (!res.ok) throw new Error("Failed to fetch data");
 
           window.allStudents = await res.json();
@@ -555,9 +558,12 @@
           return;
 
         try {
-          const res = await fetch(`http://localhost:5000/api/students/${id}`, {
-            method: "DELETE",
-          });
+          const res = await fetch(
+            `http://https://student-performance-api-8mcf.onrender.com/api/students/${id}`,
+            {
+              method: "DELETE",
+            },
+          );
           if (!res.ok) throw new Error("Delete failed");
 
           // Remove from local array and re-render

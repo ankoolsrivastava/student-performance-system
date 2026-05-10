@@ -571,7 +571,7 @@
       async function loadSubjects() {
         try {
           const res = await fetch(
-            "http://localhost:5000/api/analysis/subjects",
+            "http://https://student-performance-api-8mcf.onrender.com/api/analysis/subjects",
           );
           const data = await res.json();
           const markSelect = document.getElementById("subjectSelectMark");
@@ -604,7 +604,9 @@
         if (!sub) return alert("Please select a subject!");
 
         try {
-          const res = await fetch("http://localhost:5000/api/students");
+          const res = await fetch(
+            "http://https://student-performance-api-8mcf.onrender.com/api/students",
+          );
           let students = await res.json();
 
           // Filter on Frontend to keep server simple
@@ -681,15 +683,18 @@
         btn.innerHTML = `<i class="ri-loader-4-line ri-spin"></i> Saving...`;
 
         try {
-          const res = await fetch("http://localhost:5000/api/attendance/mark", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              date,
-              subject_id: subId,
-              attendance_data: data,
-            }),
-          });
+          const res = await fetch(
+            "http://https://student-performance-api-8mcf.onrender.com/api/attendance/mark",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                date,
+                subject_id: subId,
+                attendance_data: data,
+              }),
+            },
+          );
           if (res.ok) {
             alert("✅ Attendance saved successfully!");
             document.getElementById("attendancePanel").style.display = "none";
@@ -707,7 +712,7 @@
         const subId = document.getElementById("subjectSelectReport").value;
         const timeframe = document.getElementById("timeFilter").value;
 
-        let url = `http://localhost:5000/api/attendance/report?filterType=${timeframe}`;
+        let url = `http://https://student-performance-api-8mcf.onrender.com/api/attendance/report?filterType=${timeframe}`;
         if (subId) url += `&subject_id=${subId}`;
 
         try {
@@ -745,11 +750,14 @@
 
       async function toggleDefaulter(id, status) {
         try {
-          const res = await fetch("http://localhost:5000/api/attendance/flag", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ student_id: id, flag_status: status }),
-          });
+          const res = await fetch(
+            "http://https://student-performance-api-8mcf.onrender.com/api/attendance/flag",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ student_id: id, flag_status: status }),
+            },
+          );
           if (res.ok) fetchAttendanceReport();
         } catch (e) {
           console.error(e);

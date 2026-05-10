@@ -406,7 +406,7 @@
 
         try {
           const res = await fetch(
-            `http://localhost:5000/api/students/${studentId}`,
+            `http://https://student-performance-api-8mcf.onrender.com/api/students/${studentId}`,
           );
           if (!res.ok) throw new Error("Student not found");
 
@@ -531,7 +531,7 @@
 
           try {
             const res = await fetch(
-              `http://localhost:5000/api/students/${studentId}`,
+              `http://https://student-performance-api-8mcf.onrender.com/api/students/${studentId}`,
               {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },

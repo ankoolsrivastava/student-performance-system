@@ -405,7 +405,7 @@
 
         try {
           const res = await fetch(
-            "http://localhost:5000/api/students/next-roll",
+            "http://https://student-performance-api-8mcf.onrender.com/api/students/next-roll",
           );
 
           if (!res.ok) {
@@ -422,7 +422,7 @@
           rollInput.value = "";
           if (err.message === "Failed to fetch") {
             alert(
-              "Cannot reach the backend server. Is it running on port 5000?",
+              "Cannot reach the backend server. Is it running on port?",
             );
           }
         } finally {
@@ -500,11 +500,14 @@
           };
 
           try {
-            const res = await fetch("http://localhost:5000/api/students", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(student),
-            });
+            const res = await fetch(
+              "http://https://student-performance-api-8mcf.onrender.com/api/students",
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(student),
+              },
+            );
 
             const data = await res.json();
             if (!res.ok) {

@@ -530,10 +530,12 @@
       async function loadFormData() {
         try {
           const [students, subjects] = await Promise.all([
-            fetch("http://localhost:5000/api/students").then((r) => r.json()),
-            fetch("http://localhost:5000/api/analysis/subjects").then((r) =>
-              r.json(),
-            ),
+            fetch(
+              "http://https://student-performance-api-8mcf.onrender.com/api/students",
+            ).then((r) => r.json()),
+            fetch(
+              "http://https://student-performance-api-8mcf.onrender.com/api/analysis/subjects",
+            ).then((r) => r.json()),
           ]);
           const studentHTML = students
             .map(
@@ -582,11 +584,14 @@
         btn.innerHTML = `<i class="ri-loader-4-line ri-spin"></i> Saving...`;
 
         try {
-          const res = await fetch("http://localhost:5000/api/marks/upsert", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload),
-          });
+          const res = await fetch(
+            "http://https://student-performance-api-8mcf.onrender.com/api/marks/upsert",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+            },
+          );
           if (res.ok) {
             alert("✅ Marks recorded!");
             marksInput.value = "";
@@ -623,7 +628,7 @@
 
         try {
           const res = await fetch(
-            "http://localhost:5000/api/assignments/upsert",
+            "http://https://student-performance-api-8mcf.onrender.com/api/assignments/upsert",
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
@@ -646,7 +651,7 @@
       async function initReportFilters() {
         try {
           const res = await fetch(
-            "http://localhost:5000/api/analysis/subjects",
+            "http://https://student-performance-api-8mcf.onrender.com/api/analysis/subjects",
           );
           const subjects = await res.json();
           document.getElementById("filterSubject").innerHTML = subjects
@@ -671,7 +676,7 @@
 
         try {
           const res = await fetch(
-            `http://localhost:5000/api/analysis/filtered-standings?exam_type=${examType}&subject_id=${subjectId}`,
+            `http://https://student-performance-api-8mcf.onrender.com/api/analysis/filtered-standings?exam_type=${examType}&subject_id=${subjectId}`,
           );
           if (!res.ok) throw new Error("API Error");
           fullData = await res.json();
