@@ -1,22 +1,24 @@
 const express = require("express");
-const cors = require('cors');
-app.use(cors());
+const cors = require("cors");
 
+// Move these requires up here
 const studentRoutes = require("./routes/studentRoutes");
 const teacherRoutes = require("./routes/teacherRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const analysisRoutes = require("./routes/analysisRoutes");
 const marksRoutes = require("./routes/marksRoutes");
-const attendanceRoutes = require("./routes/attendanceRoutes"); // Imported here
+const attendanceRoutes = require("./routes/attendanceRoutes");
 const errorHandler = require("./middleware/errorHandler");
 const assignmentRoutes = require("./routes/assignmentRoutes");
+
+// 1. Initialize the app FIRST
 const app = express();
 
-/* Middleware */
+// 2. Now you can use middleware
 app.use(cors());
 app.use(express.json());
 
-/* Static folder for uploads (teacher profile images etc.) */
+/* Static folder for uploads */
 app.use("/uploads", express.static("uploads"));
 
 /* Routes */
@@ -25,8 +27,9 @@ app.use("/api/teachers", teacherRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/analysis", analysisRoutes);
 app.use("/api/marks", marksRoutes);
-app.use("/api/attendance", attendanceRoutes); // <-- This connects your new features!
+app.use("/api/attendance", attendanceRoutes);
 app.use("/api/assignments", assignmentRoutes);
+
 /* Health check */
 app.get("/health", (req, res) => {
   res.json({
