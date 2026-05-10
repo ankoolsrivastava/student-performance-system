@@ -6,13 +6,12 @@ const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   // This is required for cloud databases like Render
   ssl: {
-    rejectUnauthorized: false,
-  },
+    rejectUnauthorized: false
+  }
 });
 
 /* Test DB connection */
-pool
-  .connect()
+pool.connect()
   .then(() => {
     console.log("PostgreSQL Connected Successfully");
   })
