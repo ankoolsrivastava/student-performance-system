@@ -40,13 +40,7 @@ The Student Performance Analysis System is built to eliminate the administrative
 
 By leveraging a relational PostgreSQL database and a responsive front-end powered by Chart.js, a class teacher can seamlessly input academic records, instantly view performance trends, and identify students who may need additional support through subject-wise analytics and attendance correlations.
 
-### 📸 Screenshots
 
-| Teacher's Class Dashboard | Individual Student Analytics |
-| :---: | :---: |
-| `<img src="link-to-image-1" width="400" />` | `<img src="link-to-image-2" width="400" />` |
-
----
 
 ## ✨ Key Features
 
