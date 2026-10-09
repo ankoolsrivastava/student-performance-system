@@ -16,7 +16,7 @@ A web application for teachers to maintain student records and review academic p
 
 The existing hosted application is retained while the backend is being migrated. The original `backend/` directory is the legacy Node/Express service currently used by the deployed application. The new `backend-java/` directory contains the Java 17 + Spring Boot API being built as the replacement.
 
-**The migration is not yet feature-complete.** The Java API now includes student, marks, attendance, assignments, health, and basic performance-summary endpoints. Teacher management and authentication still need to be ported, and all Java routes must be tested against the current frontend API contract before switching the live service. This branch has not switched the existing frontend or live deployment.
+**The migration is not yet feature-complete.** The Java API now includes student, marks, attendance, assignments, health, and basic performance-summary endpoints. Teacher management and authentication still need to be ported, and all Java routes must be tested against the current frontend API contract before switching the live service. These changes are on `main`, but the existing frontend and live deployment have not been switched to the Java API.
 
 ## Technology stack
 
@@ -69,4 +69,4 @@ The checked-in `application.properties` values are local development defaults on
 - [ ] Verify all frontend API contracts and run integration tests.
 - [ ] Configure and test a separate Render service before any production cutover.
 
-The Java migration is being developed on a separate branch to avoid breaking the currently deployed application. The Maven build and integration tests have not yet been run in this environment.
+The Java migration files are committed to `main`, while the original `backend/` remains in place. No deployment or production cutover was performed. The Maven build and integration tests have not yet been run in this environment. The Java API is configured not to alter database tables automatically; use a dedicated development database while validating its schema and endpoints.
