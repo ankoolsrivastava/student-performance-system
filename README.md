@@ -1,72 +1,77 @@
-<div align="center">
-
 # Student Performance Analysis System
 
 **Java · Spring Boot · PostgreSQL · JavaScript · Chart.js**
 
-A web application for teachers to maintain student records and review academic performance through interactive dashboards and visual reports.
-
-[Live frontend](https://student-performance-web-rpkb.onrender.com) · [Java migration backend](backend-java/README.md)
-
-</div>
-
----
-
-## Project status
-
-The existing hosted application is retained while the backend is being migrated. The original `backend/` directory is the legacy Node/Express service currently used by the deployed application. The new `backend-java/` directory contains the Java 17 + Spring Boot API being built as the replacement.
-
-**The migration is not yet feature-complete.** The Java API now includes student, marks, attendance, assignments, health, and basic performance-summary endpoints. Teacher management and authentication still need to be ported, and all Java routes must be tested against the current frontend API contract before switching the live service. These changes are on `main`, but the existing frontend and live deployment have not been switched to the Java API.
+A student performance web application with a Java/Spring Boot REST API, PostgreSQL persistence, and a browser-based interface with Chart.js visualisations.
 
 ## Technology stack
 
-- **Backend:** Java 17, Spring Boot, Spring Data JPA
+- **Backend:** Java 17, Spring Boot, Spring Data JPA, Maven
 - **Database:** PostgreSQL
 - **Frontend:** HTML, CSS, JavaScript
 - **Charts:** Chart.js
-- **Build:** Maven
 
-## Run the Java API locally
+## Run locally
 
-Prerequisites: JDK 17+, Maven, and PostgreSQL.
+### Requirements
 
-1. Create a PostgreSQL database named `student_performance`.
-2. From `backend-java/`, configure database access with environment overrides such as `SPRING_DATASOURCE_URL`, `SPRING_DATASOURCE_USERNAME`, and `SPRING_DATASOURCE_PASSWORD`.
-3. Run `mvn spring-boot:run`.
-4. Verify `http://localhost:5000/health`.
+- JDK 17 or newer
+- Maven 3.9+ (or use a Maven wrapper if one is added)
+- PostgreSQL 14 or newer
 
-The checked-in `application.properties` values are local development defaults only. Use environment variables for credentials in other environments; never commit production secrets.
+### 1. Create the local database
 
-## Java API currently implemented
+Open PostgreSQL (for example, through pgAdmin or psql) and create a database:
+
+```sql
+CREATE DATABASE student_performance;
+```
+
+### 2. Configure your local database credentials
+
+The defaults in `backend/src/main/resources/application.properties` are for a standard local PostgreSQL setup. If your local PostgreSQL username or password differs, set environment variables before running the application:
+
+- `SPRING_DATASOURCE_URL`
+- `SPRING_DATASOURCE_USERNAME`
+- `SPRING_DATASOURCE_PASSWORD`
+
+Do not put real or production credentials in Git.
+
+### 3. Start the API
+
+From the repository root:
+
+```bash
+cd backend
+mvn spring-boot:run
+```
+
+The API starts at `http://localhost:5000`. Check `http://localhost:5000/health` to verify it is running. Hibernate creates or updates tables in the local database automatically; use a dedicated development database.
+
+### 4. Open the frontend
+
+Open the frontend's `index.html` using a local web server where possible. If the frontend uses a configured API base URL, point it to `http://localhost:5000`. The API allows common localhost development origins.
+
+## API endpoints
 
 | Method | Endpoint | Purpose |
 |---|---|---|
 | GET | `/health` | Health check |
 | GET | `/api/students` | List students |
-| GET | `/api/students/{id}` | Retrieve a student |
+| GET | `/api/students/{id}` | Get one student |
 | POST | `/api/students` | Create a student |
 | PUT | `/api/students/{id}` | Update a student |
 | DELETE | `/api/students/{id}` | Delete a student |
 | GET | `/api/marks` | List marks; optional `studentId` filter |
-| POST | `/api/marks` | Create marks |
-| PUT/DELETE | `/api/marks/{id}` | Update/delete marks |
+| POST | `/api/marks` | Add a mark |
+| PUT / DELETE | `/api/marks/{id}` | Update or delete a mark |
 | GET | `/api/attendance` | List attendance; optional `studentId` filter |
-| POST | `/api/attendance` | Create attendance record |
-| PUT/DELETE | `/api/attendance/{id}` | Update/delete attendance |
+| POST | `/api/attendance` | Add an attendance record |
+| PUT / DELETE | `/api/attendance/{id}` | Update or delete attendance |
 | GET | `/api/assignments` | List assignments |
-| POST | `/api/assignments` | Create assignment |
-| PUT/DELETE | `/api/assignments/{id}` | Update/delete assignment |
-| GET | `/api/analysis/summary` | Overall student and marks summary |
-| GET | `/api/analysis/student/{studentId}` | One student's marks summary |
+| POST | `/api/assignments` | Add an assignment |
+| PUT / DELETE | `/api/assignments/{id}` | Update or delete an assignment |
+| GET | `/api/analysis/summary` | Overall performance summary |
+| GET | `/api/analysis/student/{studentId}` | Individual student summary |
 
-## Migration checklist
-
-- [x] Create a separate Spring Boot application and Maven build.
-- [x] Add PostgreSQL/JPA configuration and student CRUD endpoints.
-- [x] Add marks, attendance, and assignment APIs.
-- [x] Add basic performance summary endpoints, health check, and CORS configuration.
-- [ ] Port and validate teacher and authentication flows.
-- [ ] Verify all frontend API contracts and run integration tests.
-- [ ] Configure and test a separate Render service before any production cutover.
-
-The Java migration files are committed to `main`, while the original `backend/` remains in place. No deployment or production cutover was performed. The Maven build and integration tests have not yet been run in this environment. The Java API is configured not to alter database tables automatically; use a dedicated development database while validating its schema and endpoints.
+The application is intended to be run and tested locally. No deployment is required.
